@@ -5,10 +5,19 @@ enum ReportType : u8 {
 
 ReportType report_type @ 0x31;
 
-enum StartBoost : u8 {
-	ON = 0x02,
-	OFF = 0x00
+bitfield FanFlags {
+	hold_minimum_power : 1;
+	start_boost : 1;
 };
+
+struct FanSetup {
+	FanFlags flags;
+	u32 min_power;
+	u32 max_power;
+	u32 fallback_power;
+	u32 graph_max;
+};
+
 
 enum ControlType : u8 {
 	CONST = 0x00,
@@ -29,12 +38,15 @@ struct ControlVars {
 	u32 hysterisis;
 };
 
-StartBoost fan0_start_boost @ 0x6d;
-StartBoost fan1_start_boost @ 0x7f;
+FanSetup fan0_setup @ 0x6d;
+FanSetup fan1_setup @ 0x7f;
+FanSetup fan2_setup @ 0x91;
+FanSetup fan3_setup @ 0xa3;
 
 FanMode fan0_mode @ 0xb5;
 FanMode fan1_mode @ 0x15f;
 
 ControlVars fan0_ctrl @ 0xc1;
+ControlVars fan1_ctrl @ 0x16c;
 
 u32 checksum @ 0x7c6;
