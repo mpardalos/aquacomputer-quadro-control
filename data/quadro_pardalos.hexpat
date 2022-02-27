@@ -24,11 +24,6 @@ enum ControlType : u8 {
 	TARGETTEMP = 0x01,
 };
 
-struct FanMode {
-	ControlType control_type;
-	u32 control_value;
-};
-
 struct ControlVars {
 	u32 P;
 	u32 I;
@@ -38,15 +33,28 @@ struct ControlVars {
 	u32 hysterisis;
 };
 
+struct FanMode {
+	ControlType control_type;
+	u32 control_value;
+	padding[2];
+	u8 src;
+	padding[4];
+	ControlVars control_vars;
+};
+
+u8 aquabus_address @ 0x4f;
+
+u32 flow_sensor_type @ 0x54;
+u32 sensor_offsets[4] @0x5c;
+
 FanSetup fan0_setup @ 0x6d [[color("FF00FF")]];
 FanSetup fan1_setup @ 0x7f [[color("0000FF")]];
 FanSetup fan2_setup @ 0x91 [[color("00FF00")]];
 FanSetup fan3_setup @ 0xa3 [[color("00FFFF")]];
 
 FanMode fan0_mode @ 0xb5 [[color("FF00FF")]];
-ControlVars fan0_ctrl @ 0xc1 [[color("FF00FF")]];
-
 FanMode fan1_mode @ 0x15f [[color("0000FF")]];
-ControlVars fan1_ctrl @ 0x16c [[color("0000FF")]];
+FanMode fan2_mode @ 0x209 [[color("00FF00")]];
+FanMode fan3_mode @ 0x2b3 [[color("00FFFF")]];
 
 u32 checksum @ 0x7c6 [[color("FF0000")]];
