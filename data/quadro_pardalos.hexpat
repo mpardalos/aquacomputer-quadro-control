@@ -3,7 +3,7 @@ enum ReportType : u8 {
 	FANS = 0x3,
 };
 
-ReportType report_type @ 0x31;
+ReportType report_type @ 0x31 [[color("FF0000")]];
 
 bitfield FanFlags {
 	hold_minimum_power : 1;
@@ -26,7 +26,7 @@ enum ControlType : u8 {
 
 struct FanMode {
 	ControlType control_type;
-	u8 control_value[4];
+	u32 control_value;
 };
 
 struct ControlVars {
@@ -38,15 +38,15 @@ struct ControlVars {
 	u32 hysterisis;
 };
 
-FanSetup fan0_setup @ 0x6d;
-FanSetup fan1_setup @ 0x7f;
-FanSetup fan2_setup @ 0x91;
-FanSetup fan3_setup @ 0xa3;
+FanSetup fan0_setup @ 0x6d [[color("FF00FF")]];
+FanSetup fan1_setup @ 0x7f [[color("0000FF")]];
+FanSetup fan2_setup @ 0x91 [[color("00FF00")]];
+FanSetup fan3_setup @ 0xa3 [[color("00FFFF")]];
 
-FanMode fan0_mode @ 0xb5;
-FanMode fan1_mode @ 0x15f;
+FanMode fan0_mode @ 0xb5 [[color("FF00FF")]];
+ControlVars fan0_ctrl @ 0xc1 [[color("FF00FF")]];
 
-ControlVars fan0_ctrl @ 0xc1;
-ControlVars fan1_ctrl @ 0x16c;
+FanMode fan1_mode @ 0x15f [[color("0000FF")]];
+ControlVars fan1_ctrl @ 0x16c [[color("0000FF")]];
 
-u32 checksum @ 0x7c6;
+u32 checksum @ 0x7c6 [[color("FF0000")]];
