@@ -36,3 +36,5 @@ FanMode fan0_mode @ 0xb5;
 FanMode fan1_mode @ 0x15f;
 
 ControlVars fan0_ctrl @ 0xc1;
+
+u32 checksum @ 0x7c6;
